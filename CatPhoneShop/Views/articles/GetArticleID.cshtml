@@ -1,0 +1,107 @@
+﻿@model List<CatPhoneShop.Models.BlogModel>
+
+
+@{
+    foreach (var item in Model)
+    {
+        ViewBag.Title = item.ArticleName;
+        ViewBag.MetaTittes = item.MetaTitle_ar;
+        ViewBag.MetaKeyword = item.MetaKeyword_ar;
+        ViewBag.MetaDescription = item.MetaDescription_ar;
+    }
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section id="insArticlePage">
+    <div class="insBreadcrumb blog-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-wrap">
+                <ol class="breadcrumb breadcrumb-arrow hidden-sm hidden-xs">
+                    <li><a href="/" target="_self">Trang chủ</a></li>
+                    @foreach (var item in ViewBag.getNameBlog)
+                    {
+                        <li><a href="/blogs/@item.BlogID/@item.Alias_Blog" target="_self">@item.BlogName</a> </li>
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        <li class="active"><span>@item.ArticleName</span></li>
+                    }
+
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="wrapperArticlePage">
+            <div class="row">
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <div class="insCtMain">
+
+
+                        @foreach (var item in Model)
+                        {
+                        <div class="main_article bg_w">
+                            <div class="head">
+                                <h1>
+                                    @item.ArticleName
+                                </h1>
+                                <div class="info_edu">
+                                    <ul>
+                                        <li><i class="fa fa-book" aria-hidden="true"></i> @item.Author</li>
+                                    @foreach (var blogs in ViewBag.getNameBlog)
+                                    {
+                                        <li><i class="fa fa-tags" aria-hidden="true"></i> <a href="/blogs/@blogs.BlogID/@blogs.Alias_Blog">@blogs.BlogName</a></li>
+                                    }
+                                        <li><i class="fa fa-calendar" aria-hidden="true"></i> @item.CreatedAt</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-content">
+                               @Html.Raw(item.Content)
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        }
+
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4 hidden-xs ba_sidebar">
+                    <aside id="insBlogSidebar">
+                        <div class="right_sidebar">
+                            <div class="all_right_widgets">
+                                <div class="sing_right_widget">
+                                    <h2>Bài viết mới nhất</h2>
+                                    <div class="sing_right_widg_content">
+                                        <ul class="lat_news_right">
+                                            @foreach (var item in ViewBag.getBlogNew)
+                                            {
+                                                <li class="newItem">
+                                                    <div class="wrap clearfix">
+                                                        <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article">
+                                                            <img src="@item.Images" alt="@item.ArticleName">
+                                                        </a>
+                                                        <div class="lat_news_right_con">
+                                                            <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article"><h3>@item.ArticleName</h3></a>
+                                                            <time>@item.CreatedAt</time>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

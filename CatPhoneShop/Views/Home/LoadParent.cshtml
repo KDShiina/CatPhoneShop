@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CatPhoneShop.Areas.Admin.Models.DataModel.MenuNavigation>
+
+@if ((int)ViewBag.count > 0)
+{
+<ul class="mainChild levlup_2" role="menu">
+        @foreach (var item2 in Model)
+        {
+        <li class="">
+            @{
+                if (item2.PageStyle == 1)
+                {
+
+                    if (item2.FormatPage == 1)
+                    {
+                        foreach (var cate in ViewBag.get_category)
+                        {
+                            if (item2.MenuID == cate.MenuID)
+                            {
+                                <a href="/collections/@cate.CategoryID/@cate.Alias_Cate" title="@cate.MenuName">
+                                    <span>@cate.MenuName</span>
+                                </a>
+                            }
+                        }
+                    }
+                    else if (item2.FormatPage == 2)
+                    {
+                        foreach (var blog in ViewBag.get_blog)
+                        {
+                            if (item2.MenuID == blog.MenuID)
+                            {
+                                <a href="/blogs/@blog.BlogID/@blog.Alias_Blog" title="@blog.MenuName">
+                                    <span>@blog.MenuName</span>
+                                </a>
+                            }
+                        }
+                    }
+                }
+                else if (item2.PageStyle == 2)
+                {
+                    <a href="/pages/@item2.MenuID/@item2.MenuName" title="@item2.MenuName" class="">
+                        <span>@item2.MenuName</span>
+                    </a>
+                }
+                else if (item2.PageStyle == 3)
+                {
+                    <a href="@item2.PageLink" title="@item2.MenuName" >
+                        <span>@item2.MenuName</span>
+                    </a>
+                }
+
+            }
+        </li>
+        }
+
+</ul>
+}

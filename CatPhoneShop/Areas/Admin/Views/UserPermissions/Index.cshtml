@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CatPhoneShop.Areas.Admin.Models.DataModel.UserPermission>
+
+@{
+    ViewBag.Title = "Danh Sách Các Quyền";
+}
+
+
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <div class="breadcrumb">
+        <div class="breadcrumb-left">
+            <i class="menu-icon fa fa-user" aria-hidden="true"></i>
+            <span class="title_bread"> Quản Trị Viên</span>
+        </div>
+
+    </div><!-- /.breadcrumb -->
+
+
+</div>
+
+
+
+
+
+<div class="internew-content">
+    <div class="title_cat" style="margin-top: 43px;">
+        <h3>Danh Sách Các Quyền Thuộc Control <span style="color:red">@ViewBag.ente</span></h3>
+    </div>
+    <table class="table table-responsive">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.PermissionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PermissionDescription)
+            </th>
+            <th>Tùy Chỉnh</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PermissionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PermissionDescription)
+                </td>
+                <td style="text-align:center">
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.PermissionID }, htmlAttributes: new { @class = "view_sua btn btn-xs btn-success" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

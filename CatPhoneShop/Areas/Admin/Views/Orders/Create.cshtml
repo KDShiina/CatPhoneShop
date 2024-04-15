@@ -1,0 +1,94 @@
+﻿@model CatPhoneShop.Areas.Admin.Models.DataModel.Order
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Order</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2" for="customerName">Customer Name</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="customerName" name="customerName">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Address">Address</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Address" name="Address">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Phone">Phone</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Phone" name="Phone">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Email">Email</label>
+            <div class="col-md-10">
+                <input type="email" class="form-control" id="Email" name="Email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="PaymentID">Payment ID</label>
+            <div class="col-md-10">
+                <select class="form-control" id="PaymentID" name="PaymentID">
+                    <!-- Options here -->
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="TotalMoney">Total Money</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="TotalMoney" name="TotalMoney">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="CreatedAt">Created At</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="CreatedAt" name="CreatedAt">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">View Status</label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    <input type="checkbox" class="form-check-input" id="ViewStatus" name="ViewStatus">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Status">Status</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="Status" name="Status">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

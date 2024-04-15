@@ -1,0 +1,113 @@
+﻿@model PagedList.IPagedList<CatPhoneShop.Models.BlogModel>
+@using PagedList.Mvc;
+
+@{
+    foreach (var item in ViewBag.getNameBlog)
+    {
+        ViewBag.Title = item.BlogName;
+        ViewBag.MetaTittes = item.MetaTitle;
+        ViewBag.MetaKeyword = item.MetaKeyword;
+        ViewBag.MetaDescription = item.MetaDescription;
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+
+<section id="insBlogPage">
+    <div class="insBreadcrumb ">
+        <div class="container">
+            <div class="breadcrumb-wrap">
+                <ol class="breadcrumb breadcrumb-arrow hidden-sm hidden-xs">
+                    <li><a href="/" target="_self">Trang chủ</a></li>
+
+                    @foreach (var item in ViewBag.getNameBlog)
+                    {
+                        <li class="active"><span>@item.BlogName</span></li>
+                    }
+
+
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="wrapperBlogPage">
+            <div class="row">
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <div class="row">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="articleItem col-md-6 col-sm-12 col-xs-12">
+                                <div class="insArticleLoop">
+                                    <div class="articlePostBody bg_w">
+                                        <div class="postThumbIMG relative imageHover">
+                                            <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article">
+                                                <img class="insImageload" data-load="true" src="@item.Images" alt="@item.ArticleName">
+                                            </a>
+                                            <div class="createdInfo">
+                                                <ul class="notStyle">
+                                                    <li class="time"><i class="fa fa-calendar" aria-hidden="true"></i> <time>@item.CreatedAt</time></li>
+                                                    <li class="post"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>@item.Author</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="postDetail">
+                                            <div class="detail clearfix">
+                                                <h3><a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article" title="@item.ArticleName">@item.ArticleName</a></h3>
+                                                <p>@item.DescriptShort</p>
+                                                <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article" class="view" title="Xem thêm">Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+
+
+                    </div>
+
+                    <div class="content_sortPagiBar pagi">
+                        <div id="pagination" class="clearfix">
+                            @Html.PagedListPager(Model, page => Url.Action("GetBlogID", new { page = page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4 hidden-xs ba_sidebar">
+                    <aside id="insBlogSidebar">
+                        <div class="right_sidebar">
+                            <div class="all_right_widgets">
+                                <div class="sing_right_widget">
+                                    <h2>Bài viết mới nhất</h2>
+                                    <div class="sing_right_widg_content">
+                                        <ul class="lat_news_right">
+                                            @foreach (var item in ViewBag.getBlogNew)
+                                            {
+                                                <li class="newItem">
+                                                    <div class="wrap clearfix">
+                                                        <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article">
+                                                            <img src="@item.Images" alt="@item.ArticleName">
+                                                        </a>
+                                                        <div class="lat_news_right_con">
+                                                            <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article"><h3>@item.ArticleName</h3></a>
+                                                            <time>@item.CreatedAt</time>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

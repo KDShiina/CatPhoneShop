@@ -1,0 +1,102 @@
+﻿@model CatPhoneShop.Areas.Admin.Models.DataModel.Contact
+
+@{
+    ViewBag.Title = "Xem chi tiết thư liên hệ";
+}
+
+<div class="curd" style="margin-right:70px;width:100%;">
+
+
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <div class="breadcrumb">
+            <div class="breadcrumb-left">
+                <i class="menu-icon fa fa-comments" aria-hidden="true"></i>
+                <a href="~/Admin/Contacts" class="title_bread"> Thư liên hệ</a>
+                <span style="color:#ccc;margin:0px 15px;font-size:20px;"> /</span>
+                <span class="title_bread"> Xem chi tiết</span>
+                <span style="color:#ccc;margin:0px 15px;font-size:20px;"> /</span>
+                <span class="title_bread"> @Model.FullName</span>
+            </div>
+            <div class="breadcrumb-add">
+                @Html.ActionLink("Quay Lại", "Index", "", new { @class = "btn btn-default" })
+            </div>
+        </div><!-- /.breadcrumb -->
+
+
+    </div>
+
+
+    <div class="createandedit">
+
+        <div class="row">
+
+            <div class="col-xs-12 col-md-12">
+
+                <div class="editcreate">
+
+
+
+                    <table class="table table-responsive" style="border: 1px solid #ddd;">
+                        <tr>
+                            <td class="title_text">Họ tên</td>
+                            <td>@Model.FullName</td>
+                        </tr>
+
+                        <tr>
+                            <td class="title_text">Điện Thoại</td>
+                            <td>@Model.Phone</td>
+                        </tr>
+
+                        <tr>
+                            <td class="title_text">Email</td>
+                            <td>@Model.Email</td>
+                        </tr>
+
+                        <tr>
+                            <td class="title_text">Nội Dung</td>
+                            <td>@Model.Content</td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="title_text">Điện Thoại</td>
+                            <td>@Model.Phone</td>
+                        </tr>
+
+                        <tr>
+                            <td class="title_text">Ngày nhận</td>
+                            <td>@Model.CreatedAt</td>
+                        </tr>
+
+
+                    </table>
+
+                    <div class="text-center">
+                        @Html.ActionLink("Xóa Thư Liên Hệ", "Delete", new { id = Model.ContactID }, htmlAttributes: new { @class = "btn_confirm btn btn-xs btn-danger text-center" })
+                    </div>
+
+</div>
+
+                </div>
+            </div>
+
+            <div class="text-left" style="margin-top:20px;">
+                <i class="fa fa-angle-double-left" aria-hidden="true" style="color:red !important;"></i>  @Html.ActionLink("Trở lại trang trước", "Index", "", new { style = "color:red;font-size:12px;" })
+            </div>
+
+        </div>
+
+
+<style>
+    .table tr td{
+        border:1px solid #ddd;
+        color:red;
+    padding: 15px 10px !important;
+    }
+    .title_text{
+        width:25%;
+        text-align:center;
+        color:#000 !important;
+        font-weight:bold;
+    }
+</style>

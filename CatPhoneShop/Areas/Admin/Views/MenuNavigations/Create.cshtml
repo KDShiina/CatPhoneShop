@@ -1,0 +1,275 @@
+﻿@model CatPhoneShop.Areas.Admin.Models.DataModel.MenuNavigation
+
+@{
+    ViewBag.Title = "Thêm mới Menu";
+}
+
+<div class="curd" style="margin-right:70px;width:100%;">
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <div class="breadcrumb">
+                <div class="breadcrumb-left">
+                    <i class="menu-icon fa fa-user" aria-hidden="true"></i>
+                    <a href="~/Admin/MenuNavigations" class="title_bread"> Danh sách Menu</a>
+                    <span style="color:#ccc;margin:0px 15px;font-size:20px;"> /</span>
+                    <span class="title_bread"> Thêm Mới</span>
+                </div>
+                <div class="breadcrumb-add">
+                    <a href="@Url.Action("Index")" class="btn btn-default">Hủy</a>
+                    <button type="submit" class="btn btn-primary">Lưu Lại</button>
+                </div>
+            </div><!-- /.breadcrumb -->
+        </div>
+
+        <div class="createandedit">
+            <div class="row">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="col-xs-12 col-md-8">
+                    <div class="editcreate">
+                        <div class="form-group">
+                            <label class="control-label" for="Sequence">Sequence</label>
+                            <input type="text" id="Sequence" name="Sequence" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.Sequence, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="MenuName">Menu Name</label>
+                            <input type="text" id="MenuName" name="MenuName" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.MenuName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="IconMenu">Icon Menu</label>
+                            <input type="file" id="IconMenu" name="IconMenu" onchange="readURL(this);" />
+                            <div id="showImage">
+                                <img id="image_showed" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="PageContent">Page Content</label>
+                            <textarea id="PageContent" name="PageContent" class="form-control"></textarea>
+                            @Html.ValidationMessageFor(model => model.PageContent, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="PageLink">Page Link</label>
+                            <input type="text" id="PageLink" name="PageLink" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.PageLink, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="seo_des">
+                        <div class="pen-top">
+                            <div class="pull-left txt_left1">Tối ưu SEO</div>
+                            <div class="pull-right txt_left2">Chỉnh sửa SEO</div>
+                            <p class="text_set">Thiết lập các thẻ mô tả giúp khách hàng dễ dàng tìm thấy danh mục này trên công cụ tìm kiếm như Google.</p>
+                            <div class="input_telier">
+                                <div class="form-group ten-seo">
+                                    <label class="control-label" for="MetaTitle">Meta Title</label>
+                                    <input type="text" id="MetaTitle" name="MetaTitle" class="form-control" />
+                                    <span class="text-danger" id="metaTitleValidation"></span>
+                                </div>
+                                <div class="form-group ten-seo">
+                                    <label class="control-label" for="MetaKeyword">Meta Keyword</label>
+                                    <input type="text" id="MetaKeyword" name="MetaKeyword" class="form-control" />
+                                    <span class="text-danger" id="metaKeywordValidation"></span>
+                                </div>
+                                <div class="form-group ten-seo">
+                                    <label class="control-label" for="MetaDescription">Meta Description</label>
+                                    <textarea id="MetaDescription" name="MetaDescription" class="form-control"></textarea>
+                                    <span class="text-danger" id="metaDescriptionValidation"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+
+                    <div class="col-xs-12 col-md-4">
+                        <div class="visible-status">
+                            <p class="title_st">Hiển thị</p>
+                            <div class="check-st">
+                                <div class="show-st">
+                                    <input type="radio" name="status_mi" value="true" checked /> <span class="hideshow">Hiện</span>
+                                </div>
+                                <div class="show-st">
+                                    <input type="radio" name="status_mi" value="false" /> <span class="hideshow">Ẩn</span>
+                                </div>
+                            </div>
+
+                            <div class="time-stamp">
+                                <p class="title_sts"> Thời Gian:</p>
+                                <input type="text" value="@DateTime.Now" disabled />
+                            </div>
+                        </div>
+
+                        <div class="bot-des-more">
+                            <h3 class="title_pl">Phân loại</h3>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MenuID, "Danh mục Cha", htmlAttributes: new { @class = "control-label" })
+                                <span class="custom-dropdown custom-dropdown-white">
+                                    <select id="MenuParents" name="MenuParents" class="form-control custom-dropdown-select">
+                                        <option value="0">Danh Mục Gốc</option>
+                                        @foreach (var item in ViewBag.item)
+                                        {
+                                            <option value="@item.MenuID">@item.MenuName</option>
+                                        }
+                                    </select>
+                                </span>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label class="control-label">Chọn Kiểu Menu</label>
+
+                                <span class="custom-dropdown custom-dropdown-white">
+                                    <select name="PageStyle" id="PageStyle" class="form-control custom-dropdown-select">
+                                        <option value="0">===Chọn Kiểu Menu===</option>
+                                        <option value="1">Nhóm Liên Kết</option>
+                                        <option value="2">Trang Nội Dung</option>
+                                        <option value="3">Liên Kết URL</option>
+                                        <option value="4">Liên Kết Trang Liên Hệ</option>
+                                    </select>
+                                </span>
+                                @Html.ValidationMessageFor(model => model.PageStyle, "", new { @class = "text-danger" })
+                            </div>
+
+
+                            <div class="form-group theloai_page">
+
+                                @Html.LabelFor(model => model.FormatPage, htmlAttributes: new { @class = "control-label" })
+                                <span class="custom-dropdown custom-dropdown-white">
+                                    <select id="FormatPage" name="FormatPage" class="form-control custom-dropdown-select">
+                                        <option value="0">===Chọn Thể Loại Trang===</option>
+                                        <option value="1">Liên Kết Sản Phẩm</option>
+                                        <option value="2">Liên Kết Bài Viết</option>
+
+                                    </select>
+                                </span>
+                                @Html.ValidationMessageFor(model => model.FormatPage, "", new { @class = "text-danger" })
+                            </div>
+
+
+                            <div class="form-group group_lienket">
+                                @Html.LabelFor(model => model.GroupLink, htmlAttributes: new { @class = "control-label " })
+                                <span class="custom-dropdown custom-dropdown-white">
+                                    <select id="GroupLink" name="GroupLink" class="form-control custom-dropdown-select">
+                                    </select>
+                                </span>
+                            </div>
+
+                     </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            $('.noset-image').hide();
+            $('.change_image').css("display", "block");
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_showed')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(document).ready(function () {
+        $(".page_content").hide();
+        $(".link_lienket").hide();
+        $(".theloai_page").hide();
+        $(".group_lienket").hide();
+        $('#PageStyle').on('change', function () {
+            if (this.value == '1') {
+
+                $(".page_content textarea").val("");
+                $(".link_lienket input").val("");
+
+                $(".theloai_page").show();
+                $(".link_lienket").hide();
+                $(".page_content").hide();
+                $(".group_lienket").hide();
+            } else if (this.value == '2') {
+                $('#FormatPage option[value=0]').attr('selected', 'selected');
+                $('#GroupLink option[value=0]').attr('selected', 'selected');
+
+                $(".link_lienket input").val("");
+
+                $(".theloai_page").hide();
+                $(".link_lienket").hide();
+                $(".page_content").show();
+                $(".group_lienket").hide();
+            } else if (this.value == '3') {
+                $('#FormatPage option[value=0]').attr('selected', 'selected');
+                $('#GroupLink option[value=0]').attr('selected', 'selected');
+                $(".page_content textarea").html("");
+
+                $(".theloai_page").hide();
+                $(".link_lienket").show();
+                $(".page_content").hide();
+                $(".group_lienket").hide();
+            } else {
+                $('#FormatPage option[value=0]').attr('selected', 'selected');
+                $('#GroupLink option[value=0]').attr('selected', 'selected');
+                $(".page_content textarea").val("");
+                $(".link_lienket input").val("");
+
+                $(".page_content").hide();
+                $(".link_lienket").hide();
+                $(".theloai_page").hide();
+                $(".group_lienket").hide();
+            }
+        });
+
+        $('#FormatPage').on('change', function () {
+            $(".group_lienket").show();
+            if (this.value == 1) {
+                $('#GroupLink').html('');
+                $.ajax({
+                    type: "GET",
+                    url: "/YourController/GetDataCategorys",
+                    success: function (data) {
+                        $.each(data, function (i, item) {
+                            $('#GroupLink').append("<option value='" + item.IdCate + "'>" + item.NameCate + "</option>");
+                        });
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            } else if (this.value == 2) {
+                $('#GroupLink').html('');
+                $.ajax({
+                    type: "GET",
+                    url: "/YourController/GetDataBlogs",
+                    success: function (data) {
+                        $.each(data, function (i, item) {
+                            $('#GroupLink').append("<option value='" + item.IdBlog + "'>" + item.NameBlog + "</option>");
+                        });
+                    },
+                    error: function (responses) {
+                        alert(responses.responseText);
+                    }
+                });
+            }
+        });
+    });
+
+    $("#MenuParents").prepend('<option value=0 selected >Danh Mục Gốc</option>');
+</script>

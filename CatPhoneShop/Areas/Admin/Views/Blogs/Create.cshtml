@@ -1,0 +1,162 @@
+﻿@model CatPhoneShop.Areas.Admin.Models.DataModel.Blog
+
+@{
+    ViewBag.Title = "Tạo mới Danh Mục Blog";
+}
+
+<div class="curd" style="margin-right:70px;width:100%;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <div class="breadcrumb">
+                <div class="breadcrumb-left">
+                    <i class="menu-icon fa fa-user" aria-hidden="true"></i>
+                    <a href="~/Admin/Blogs" class="title_bread"> Danh sách danh mục Blog</a>
+                    <span style="color:#ccc;margin:0px 15px;font-size:20px;"> /</span>
+                    <span class="title_bread"> Thêm Mới</span>
+                </div>
+                <div class="breadcrumb-add">
+                    @Html.ActionLink("Hủy", "Index", "", new { @class = "btn btn-default" })
+                    <input type="submit" value="Lưu Lại" class="btn btn-primary" />
+                </div>
+            </div><!-- /.breadcrumb -->
+
+
+        </div>
+
+
+        <div class="createandedit">
+
+            <div class="row">
+
+
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <p style="color:red;font-weight:bold;text-align:center;">@ViewBag.check_blog</p>
+                <p style="color:red;font-weight:bold;text-align:center;">@ViewBag.check_alias</p>
+
+
+                <div class="col-xs-12 col-md-8">
+
+                    <div class="editcreate">
+                        <div class="form-group">
+                            <label for="BlogName" class="control-label">Blog Name</label>
+                            <input type="text" class="form-control" id="BlogName" name="BlogName" />
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Alias" class="control-label">Alias</label>
+                            <input type="text" class="form-control" id="Alias" name="Alias" readonly />
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Content" class="control-label">Content</label>
+                            <textarea class="form-control" id="Content" name="Content"></textarea>
+                            <span class="text-danger"></span>
+                        </div>
+
+
+
+                    </div>
+
+
+
+                    <div class="seo_des">
+                        <div class="pen-top">
+                            <div class="pull-left txt_left1">Tối ưu SEO</div>
+
+                            <div class="pull-right txt_left2">Chỉnh sửa SEO</div>
+
+                            <p class="text_set">Thiết lập các thẻ mô tả giúp khách hàng dễ dàng tìm thấy danh mục này trên công cụ tìm kiếm như Google.</p>
+
+
+
+                            <div class="input_telier">
+                                <div class="form-group ten-seo">
+                                    <label for="MetaTitle" class="control-label">Meta Title</label>
+                                    <input type="text" class="form-control" id="MetaTitle" name="MetaTitle" />
+                                    <span class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group ten-seo">
+                                    <label for="MetaKeyword" class="control-label">Meta Keyword</label>
+                                    <input type="text" class="form-control" id="MetaKeyword" name="MetaKeyword" />
+                                    <span class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group ten-seo">
+                                    <label for="MetaDescription" class="control-label">Meta Description</label>
+                                    <textarea class="form-control" id="MetaDescription" name="MetaDescription" rows="4"></textarea>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    </div>
+
+
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="visible-status">
+                        <p class="title_st">Hiển thị</p>
+                        <div class="check-st">
+                            <div class="show-st">
+                                <input type="radio" name="status_mi" value="true" checked /> <span class="hideshow">Hiện</span>
+                            </div>
+                            <div class="show-st">
+                                <input type="radio" name="status_mi" value="false" /> <span class="hideshow">Ẩn</span>
+                            </div>
+                        </div>
+
+                        <div class="time-stamp">
+                            <p class="title_sts"> Thời Gian:</p>
+                            <input type="text" value="@DateTime.Now" disabled />
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+
+                    </div>
+
+                    <div class="text-left" style="margin-top:20px;">
+                        <i class="fa fa-angle-double-left" aria-hidden="true" style="color:red !important;"></i>  @Html.ActionLink("Trở lại trang trước", "Index", "", new { style = "color:red;font-size:12px;" })
+                    </div>
+
+
+                </div>
+                }
+
+            </div>
+
+
+
+<script>
+
+
+
+    $("#BlogName").keyup(function () {
+        var Text = $(this).val();
+        Text = Text.toLowerCase();
+        $("#Alias").val(convertToSlug(Text));
+    });
+
+
+    $("#BlogName ").mouseout(function () {
+            var Text = $(this).val();
+            Text = Text.toLowerCase();
+            $("#Alias").val(convertToSlug(Text));
+        });
+</script>

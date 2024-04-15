@@ -1,0 +1,60 @@
+﻿@foreach (var blog in ViewBag.getTitleBlock1)
+{
+
+    if (blog.Blog_Status == true)
+    {
+
+
+<section id="blogHome" class="blockSection blogHome">
+    <div class="container">
+        <div class="wapperBlogHome">
+            <div class="featuredTitle">
+                <a href="#">
+                    <h2>
+                        @blog.title_blog
+                    </h2>
+                </a>
+                <!--
+                <p class="titleDesc">
+                    Tin công nghệ, cập nhật tin tức nhanh nhất và mới nhất
+                </p>
+                -->
+            </div>
+            <div class="blogsList">
+                <ul class="slideBlogHome owlDesign notDots notStyle">
+                @foreach (var item in ViewBag.bloghome)
+                {
+
+                    <li class="articleItem">
+                        <div class="insArticleLoop">
+                            <div class="articlePostBody bg_w">
+                                <div class="postThumbIMG relative imageHover">
+                                    <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article">
+                                        <img class="insImageload" data-load="true" src="@item.Images" alt="@item.ArticleName">
+                                    </a>
+                                    <div class="createdInfo">
+                                        <ul class="notStyle">
+                                            <li class="time"><i class="fa fa-calendar" aria-hidden="true"></i> <time>@item.CreatedAt</time></li>
+                                            <li class="post"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>@item.Author</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="postDetail">
+                                    <div class="detail clearfix">
+                                        <h3><a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article" title="@item.ArticleName">@item.ArticleName</a></h3>
+                                        <p>@item.DescriptShort</p>
+                                        <a href="/articles/@item.BlogID/@item.ArticleID/@item.Alias_Article" class="view" title="Xem thêm">Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+    }
+}

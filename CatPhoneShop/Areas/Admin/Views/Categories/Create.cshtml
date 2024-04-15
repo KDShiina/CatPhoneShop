@@ -1,0 +1,218 @@
+﻿@model CatPhoneShop.Areas.Admin.Models.DataModel.Category
+
+@{
+    ViewBag.Title = "Tạo Mới nhóm sản phẩm";
+}
+
+<div class="curd" style="margin-right:70px;width:100%;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "categoryForm" }))
+    {
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <div class="breadcrumb">
+                <div class="breadcrumb-left">
+                    <i class="menu-icon fa fa-user" aria-hidden="true"></i>
+                    <a href="~/Admin/Users" class="title_bread"> Danh sách nhóm sản phẩm</a>
+                    <span style="color:#ccc;margin:0px 15px;font-size:20px;"> /</span>
+                    <span class="title_bread"> Thêm Mới</span>
+                </div>
+                <div class="breadcrumb-add">
+                    @Html.ActionLink("Hủy", "Index", "", new { @class = "btn btn-default" })
+                    <input type="submit" value="Lưu Lại" class="btn btn-primary" />
+                </div>
+            </div><!-- /.breadcrumb -->
+        </div>
+
+        <div class="createandedit">
+            <div class="row">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <p style="color:red;font-weight:bold;text-align:center;">@ViewBag.check_cate</p>
+                <p style="color:red;font-weight:bold;text-align:center;">@ViewBag.check_alias</p>
+                <div class="col-xs-12 col-md-8">
+                    <div class="editcreate">
+                        <div class="form-group">
+                            <label for="CategoryName" class="control-label">Tên danh mục</label>
+                            <input type="text" id="CategoryName" name="CategoryName" class="form-control" />
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Alias" class="control-label">Bí danh</label>
+                            <input type="text" id="Alias" name="Alias" class="form-control" readonly="readonly" />
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Content" class="control-label">Nội dung</label>
+                            <div id="txtContent"></div>
+                            <span class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="seo_des">
+                        <div class="pen-top">
+                            <div class="pull-left txt_left1">Tối ưu SEO</div>
+                            <div class="pull-right txt_left2">Chỉnh sửa SEO</div>
+                            <p class="text_set">Thiết lập các thẻ mô tả giúp khách hàng dễ dàng tìm thấy danh mục này trên công cụ tìm kiếm như Google.</p>
+                            <div class="input_telier">
+                                <div class="form-group ten-seo">
+                                    <label for="MetaTitle" class="control-label">Tiêu đề Meta</label>
+                                    <input type="text" id="MetaTitle" name="MetaTitle" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group ten-seo">
+                                    <label for="MetaKeyword" class="control-label">Từ khóa Meta</label>
+                                    <input type="text" id="MetaKeyword" name="MetaKeyword" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group ten-seo">
+                                    <label for="MetaDescription" class="control-label">Mô tả Meta</label>
+                                    <textarea id="MetaDescription" name="MetaDescription" class="form-control" rows="4"></textarea>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="visible-status">
+                        <p class="title_st">Hiển thị</p>
+                        <div class="check-st">
+                            <div class="show-st">
+                                <input type="radio" name="status_mi" value="true" checked /> <span class="hideshow">Hiện</span>
+                            </div>
+                            <div class="show-st">
+                                <input type="radio" name="status_mi" value="false" /> <span class="hideshow">Ẩn</span>
+                            </div>
+                        </div>
+
+                        <div class="time-stamp">
+                            <p class="title_sts"> Thời Gian:</p>
+                            <input type="text" value="@DateTime.Now" disabled />
+                        </div>
+                    </div>
+
+                    <div class="image-avatar">
+                        <p class="title_anh">Ảnh đại diện</p>
+                        <div class="frame-image">
+                            <div class="noset-image">
+                                <input type="file" name="image_avatar" class="hidden" id="uploadFile" onchange="readURL(this);" />
+                                <div class="select-image" onclick="performClick('uploadFile');"><i class="fa fa-picture-o" aria-hidden="true"></i><br />Chọn hình</div>
+                            </div>
+                            <div id="showImage">
+                                <img id="image_showed" width="100%" />
+                            </div>
+                        </div>
+                        <a href="javascript::0" class="change_image" onclick="performClick('uploadFile');">Thay hình ảnh</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-left" style="margin-top:20px;">
+                <i class="fa fa-angle-double-left" aria-hidden="true" style="color:red !important;"></i>  @Html.ActionLink("Trở lại trang trước", "Index", "", new { style = "color:red;font-size:12px;" })
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#categoryForm").submit(function () {
+            var hasError = false;
+
+            // Kiểm tra các trường nhập liệu và hiển thị thông điệp lỗi tương ứng
+            if ($("#CategoryName").val().trim() === "") {
+                $("#CategoryName").next(".text-danger").text("Vui lòng nhập tên danh mục.");
+                hasError = true;
+            } else {
+                $("#CategoryName").next(".text-danger").text("");
+            }
+
+            // Kiểm tra trường Alias
+            if ($("#Alias").val().trim() === "") {
+                $("#Alias").next(".text-danger").text("Vui lòng nhập bí danh.");
+                hasError = true;
+            } else {
+                $("#Alias").next(".text-danger").text("");
+            }
+
+            // Kiểm tra trường MetaTitle
+            if ($("#MetaTitle").val().trim() === "") {
+                $("#MetaTitle").next(".text-danger").text("Vui lòng nhập tiêu đề Meta.");
+                hasError = true;
+            } else {
+                $("#MetaTitle").next(".text-danger").text("");
+            }
+
+            // Kiểm tra trường MetaKeyword
+            if ($("#MetaKeyword").val().trim() === "") {
+                $("#MetaKeyword").next(".text-danger").text("Vui lòng nhập từ khóa Meta.");
+                hasError = true;
+            } else {
+                $("#MetaKeyword").next(".text-danger").text("");
+            }
+
+            // Kiểm tra trường MetaDescription
+            if ($("#MetaDescription").val().trim() === "") {
+                $("#MetaDescription").next(".text-danger").text("Vui lòng nhập mô tả Meta.");
+                hasError = true;
+            } else {
+                $("#MetaDescription").next(".text-danger").text("");
+            }
+
+            // Nếu có lỗi, ngăn chặn form được submit
+            if (hasError) {
+                return false;
+            }
+        });
+    });
+
+    function performClick(elemId) {
+        var elem = document.getElementById(elemId);
+        if (elem && document.createEvent) {
+            var evt = document.createEvent("MouseEvents");
+            evt.initEvent("click", true, false);
+            elem.dispatchEvent(evt);
+        }
+    }
+
+    var loadFile = function (event) {
+        var files = event.target.files;
+        for (var i = 0; i < files.length; i++) {
+            $("#showImage").append("<img src='" + URL.createObjectURL(event.target.files[i]) + "' class='imaged' />");
+        }
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            $('.noset-image').hide();
+            $('.change_image').css("display", "block");
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image_showed').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<script>
+
+
+
+    $("#CategoryName").keyup(function () {
+        var Text = $(this).val();
+        Text = Text.toLowerCase();
+        $("#Alias").val(convertToSlug(Text));
+    });
+
+
+    $("#CategoryName").mouseout(function () {
+        var Text = $(this).val();
+        Text = Text.toLowerCase();
+        $("#Alias").val(convertToSlug(Text));
+    });
+</script>
