@@ -36,5 +36,6 @@ namespace CatPhoneShop.Areas.Admin.Models.BusinessModel
         public System.Data.Entity.DbSet<CatPhoneShop.Areas.Admin.Models.DataModel.MenuNavigation> MenuNavigations { get; set; }
 
         public System.Data.Entity.DbSet<CatPhoneShop.Areas.Admin.Models.DataModel.Configure> Configures { get; set; }
+        public DbSet<VnpayTransaction> VnpayTransactions { get; set; }
     }
 }

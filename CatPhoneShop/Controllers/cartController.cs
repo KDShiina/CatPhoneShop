@@ -72,7 +72,7 @@ namespace CatPhoneShop.Controllers
         [HttpPost]
         public JsonResult UpdateCart(string CartModels)
         {
-            var JsonCart = new JavaScriptSerializer().Deserialize<List<CartModel>>(CartModels);
+           var JsonCart = new JavaScriptSerializer().Deserialize<List<CartModel>>(CartModels);
             var sessionCart = (List<CartModel>)Session["CartItem"];
 
             foreach (var item in sessionCart)

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
 
-
+            <!-- Slider Chính -->
             <div id="insSlider" class="col-md-8 col-sm-12 col-xs-12 bannerSlider">
                 <div class="boxSlideHome">
                     <div class="owlDesign sliderWrap">
@@ -13,64 +13,59 @@
                         {
                             <div class="itemSlide">
                                 <a href="@item.URL" title="@item.Description" target="_blank">
-                                    <img class="owl-lazy" data-src="@item.Images" alt="" />
+                                    <img class="owl-lazy" data-src="@item.Images" alt="@item.Description" />
                                 </a>
                             </div>
                         }
 
-
                     </div>
+
+                    <!-- Danh sách tiêu đề slide -->
                     <div class="subWrap hidden-xs">
                         <ul class="listSub clearfix">
-
-                        @foreach (var item in Model)
-                        {
-                            if (Model.First() == item)
+                            @foreach (var item in Model)
                             {
-                            <li class="active">
-                                <a href="javascript::0" title="@item.Description">
-                                    <h3>
-                                       @item.Description
-                                    </h3>
-                                </a>
-                            </li>
+                                <li class="@(item == Model.First() ? "active" : "")">
+                                    <a href="javascript:void(0)" title="@item.Description">
+                                        <h3>@item.Description</h3>
+                                    </a>
+                                </li>
                             }
-                            else
-                            {
-
-                            <li>
-                                <a href="javascript::0" title="@item.Description">
-                                    <h3>
-                                        @item.Description
-                                    </h3>
-                                </a>
-                            </li>
-                            }
-                        }
-
-
-
                         </ul>
                     </div>
                 </div>
             </div>
 
-
+            <!-- Banner bên phải -->
             <div id="insBannerRight" class="col-md-4 col-sm-12 col-xs-12 bannerSlider">
                 <div class="wrapBannerRight">
                     <ul>
-                    @foreach (var banner in ViewBag.getBanner)
-                    {
-                        <li>
-                            <a href="@banner.Link_banner_1"><img src="@banner.Banner_1" alt="" /></a>
-                        </li>
-                        <li>
-                            <a href="@banner.Link_banner_2"><img src="@banner.Banner_2" alt="" /></a>
-                        </li>
-                    }
+                        @if (ViewBag.getBanner != null)
+                        {
+                            foreach (var banner in ViewBag.getBanner)
+                            {
+                                if (!string.IsNullOrEmpty(banner.Link_banner_1) && !string.IsNullOrEmpty(banner.Banner_1))
+                                {
+                                    <li>
+                                        <a href="@banner.Link_banner_1">
+                                            <img src="@banner.Banner_1" alt="Banner 1" />
+                                        </a>
+                                    </li>
+                                }
+                                if (!string.IsNullOrEmpty(banner.Link_banner_2) && !string.IsNullOrEmpty(banner.Banner_2))
+                                {
+                                    <li>
+                                        <a href="@banner.Link_banner_2">
+                                            <img src="@banner.Banner_2" alt="Banner 2" />
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        }
                     </ul>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

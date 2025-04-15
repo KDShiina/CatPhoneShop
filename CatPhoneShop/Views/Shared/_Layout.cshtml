@@ -29,27 +29,20 @@ window.shop = {
 
     <div id="fb-root"></div>
     <script>
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.11&appId=221096801755061';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.11&appId=221096801755061';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
 </head>
 <body class="insHome index">
 
-    <div class="preloader">
-        <div id="cssload-loader">
-            <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
+    <div class="preloader" id="preloader">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
         </div>
     </div>
 
@@ -72,8 +65,42 @@ window.shop = {
     <script src="~/Content/Samshop/js/plugins.js"></script>
     <script src="~/Content/Samshop/js/inspired.js"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const progressBar = document.getElementById("progress-bar");
+            const preloader = document.getElementById("preloader");
+            let width = 0;
+
+            const progress = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(progress);
+                    preloader.style.display = "none";
+                } else {
+                    width++;
+                    progressBar.style.width = width + "%";
+                }
+            }, 30);
+        });
+    </script>
+
+    <style>
+        #progress-container {
+            width: 100%;
+            height: 4px;
+            background: #f3f3f3;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background: #4caf50;
+            transition: width 0.1s ease;
+        }
+    </style>
+
 </body>
 </html>
-
-
-
